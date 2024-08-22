@@ -57,7 +57,6 @@ exports.addBookToReservations = async(req,res) => {
         await book.save();
         res.send(user);
     } catch (error) {
-        console.error("Greska na serveru:", error.message);
         res.status(500).send('Greska na serveru');
     }
 };
@@ -71,6 +70,51 @@ exports.addBookToShelf = async(req,res) => {
         user.polica.push(book._id);
         await user.save();
 
+        res.send(user);
+    } catch (error) {
+        res.status(500).send('Greska na serveru');
+    }
+}
+
+exports.removeBookFromShelf = async(req,res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if(!user) return res.status(404).send('Korisnik nije pronadjen');
+        
+        const bookIndex = user.polica.indexOf(req.body.bookId);
+        if(bookIndex == -1) {
+            return res.status(400).send('Knjiga nije pronadjena na polici');
+        }
+        user.polica.splice(bookIndex,1);
+        await user.save();
+
+        res.send(user);
+    } catch (error) {
+        res.status(500).send('Greska na serveru');
+    }
+}
+
+exports.removeBookFromReservations = async(req,res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if(!user) return res.status(404).send('Korisnik nije pronadjen');
+
+        const bookIndex = user.rezervacije.indexOf(req.body.bookId);
+        if(bookIndex == -1) {
+            return res.status(400).send('Knjiga nije pronadjena u rezervacijama.');
+        } 
+        user.rezervacije.splice(bookIndex,1);
+
+        const book = await Book.findById(req.body.bookId);
+        if(!book) return res.status(404).send('Knjiga nije pronadjena');
+
+        const signatura = book.signatura.find(sig=> sig.status =='zauzet');
+        if(signatura) {
+            signatura.status = 'slobodan';
+            await book.save();
+        }
+
+        await user.save();
         res.send(user);
     } catch (error) {
         res.status(500).send('Greska na serveru');
