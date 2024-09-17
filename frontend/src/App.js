@@ -12,6 +12,9 @@ import LoginPage from './pages/LoginPage';
 import Registration from './pages/Registration';
 import ForgotPassword from './pages/ForgotPassword';
 import NewPassword from './pages/NewPassword';
+import SearchedBooks from './pages/SearchedBooks';
+import AdvancedSearchedBooks from './pages/AdvancedSearchedBooks';
+import BookDetailsPage from './pages/BookDetailsPage';
 
 function App() {
   const books = [
@@ -40,9 +43,12 @@ function App() {
         <Route path="/"element={<HomePage/>}/>
         <Route path="/advanced-search" element={<AdvancedSearch/>}/>
         <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/searched-books/:searchQuery" element={<SearchedBooks />} />
         <Route path="/registration" element={<Registration/>}/>
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/new-password" element={<NewPassword/>}/>
+        <Route path="/book-details/:bookId" element={<BookDetailsPage />} /> 
+        <Route path="/advanced-searched-books/:author?/:title?/:publisher?/:year?" element={<AdvancedSearchedBooks />} />
 
       </Routes>
     </>

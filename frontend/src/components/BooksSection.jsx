@@ -12,9 +12,10 @@ function BooksSection({ books,title }) {
         {visibleBooks.map((book, index) => (
           <BookCard 
             key={index} 
-            title={book.title} 
-            author={book.author} 
-            coverImage={book.coverImage} 
+            title={book.naslov} 
+            author={book.autor} 
+            id={book._id}
+            coverImage={book.fotografija} 
           />
         ))}
       </div>
