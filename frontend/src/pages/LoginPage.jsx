@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Navbar from '../components/Navbar';
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function LoginPage() {
     const [formData,setFormData] = useState({
         email:"",
-        password:"",
+        lozinka:"",
 
     });
     
@@ -18,10 +21,30 @@ function LoginPage() {
             [name]:value
         });
     }
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // pozivanje backend-a kasnije
+        
+        if(!formData.email || !formData.lozinka) {
+            alert('Oba polja moraju biti popunjena');
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:5005/api/auth/login',formData);
+            const token = response.data;
+            
+            localStorage.setItem('authToken', token);
+
+            navigate('/');
+        } catch (error) {
+            if(error.response && error.response.status === 400) {
+                alert(error.response.data);
+            } else {
+                alert(error);
+            }
+        }
     }
     return ( 
         <>
@@ -31,6 +54,7 @@ function LoginPage() {
                 <label className='form-label'>Email</label>
                 <input 
                 type="text"
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
                 className='form-control' />
@@ -39,7 +63,8 @@ function LoginPage() {
                 <label className='form-label'>Password</label>
                 <input 
                 type="password"
-                value={formData.password}
+                name="lozinka"
+                value={formData.lozinka}
                 onChange={handleChange}
                 className='form-control' />            
             </div>
@@ -49,9 +74,7 @@ function LoginPage() {
             <Link to="/registration" className="btn btn-primary form-btn">
                 Registracija
             </Link>
-            <Link to="/forgot-password" className="btn btn-primary form-btn">
-                Zaboravljena lozinka
-            </Link>
+
         </form>
         </>
      );
