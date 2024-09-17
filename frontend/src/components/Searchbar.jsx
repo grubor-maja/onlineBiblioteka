@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 
-function Searchbar() {
+function Searchbar({ searchQuery, setSearchQuery, handleSearch }) {
     return (  
-        <>
         <div className="search-bar d-flex">
-            <input type="search" placeholder='Pretrazi...' className='form-control me-2 search-input' />
-            <button type="submit" className='btn btn-outline-success'>Search</button>
+            <input 
+                type="search" 
+                placeholder='Pretraži...' 
+                className='form-control me-2 search-input'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button 
+                type="button" 
+                className='btn btn-outline-success' 
+                onClick={handleSearch}
+            >
+                Search
+            </button>
         </div>
-        </>
     );
 }
 

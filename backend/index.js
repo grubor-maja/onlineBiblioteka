@@ -1,6 +1,7 @@
 require('dotenv').config();
 const config = require('config');
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -13,6 +14,7 @@ mongoose.connect(config.get('db'))
     .catch((err) => console.log('Error connecting to MongoDB',err))
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/auth',authRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/books',bookRoutes);
