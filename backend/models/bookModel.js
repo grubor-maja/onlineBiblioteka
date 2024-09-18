@@ -3,57 +3,62 @@ const Joi = require('joi');
 
 const bookSchema = mongoose.Schema({
     naslov: {
-        type:String,
-        required:true,
-        minlength:1,
-        maxlength:255
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255
     },
     autor: {
-        type:[String],
-        required:true,
-        minlength:1,
-        maxlength:255
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255
     },
     izdavac: {
-        type:String,
-        required:true,
-        minlength:1,
-        maxlength:255
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255
     },
     godinaIzdanja: {
-        type:Number,
-        required:true,
+        type: Number,
+        required: true,
         max: new Date().getFullYear()
     },
     zanr: {
-        type:String,
-        required:true,
-        minlength:2,
-        maxlength:50
+        type: String,
+        required: true,
+        minlength: 2,
+        maxlength: 50
     },
     isbn: {
-        type:String,
-        required:true,
-        minlength:10,
-        maxlength:13,
-        unique:true
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 13,
+        unique: true
     },
     signatura: [{
         inventarskiBroj: {
-            type:String, 
-            required:true,
-            unique:true
+            type: String,
+            required: true,
+            unique: true
         },
         status: {
-            type:String,
-            enum:['slobodan','zauzet'],
-            default:'slobodan'
+            type: String,
+            enum: ['slobodan', 'zauzet'],
+            default: 'slobodan'
         }
     }],
     fotografija: {
-        type:String,
-        required:false,
-        maxlength:1024
+        type: String,
+        required: false,
+        maxlength: 1024
+    },
+    opis: {
+        type: String,
+        required: false,
+        maxlength: 5000 
     }
 });
 
@@ -69,14 +74,14 @@ function validateBook(book) {
             inventarskiBroj: Joi.string().required(),
             status: Joi.string().valid('slobodan', 'zauzet').required()
         })),
-        fotografija:Joi.string()
-    
+        fotografija: Joi.string().max(1024),
+        opis: Joi.string().max(5000) 
     });
 
     return schema.validate(book);
 }
 
-const Book = mongoose.model('Book',bookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 module.exports = {
     Book,
