@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
     const [userName, setUserName] = useState('');
+    const [isDropdownOpen,setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -26,6 +27,10 @@ function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
         setUserName('');
         window.location.href = '/';
     };
+    
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    }
 
     return (
         <nav className="navbar">
@@ -45,9 +50,19 @@ function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
             </div>
             <div className="navbar-right">
                 {userName ? (
-                    <span>
-                        Welcome, {userName} <button className='navbar-login' onClick={handleLogout}>Logout</button>
+                    <div className="navbar-user">
+                    <span onClick={toggleDropdown} className="navbar-username">
+                        {userName} ▼
                     </span>
+                    {isDropdownOpen && (
+                        <div className="navbar-dropdown">
+                            <Link to="/polica" onClick={() => setIsDropdownOpen(false)}>Moja polica</Link>
+                            <Link to="/rezervacije" onClick={() => setIsDropdownOpen(false)}>Moje rezervacije</Link>
+                        </div>
+                        
+                    )}
+                    <button onClick={handleLogout}>Odjava</button>
+                </div>
                 ) : (
                     <Link to="/login" className="navbar-login">Prijava</Link>
                 )}

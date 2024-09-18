@@ -15,6 +15,8 @@ import NewPassword from './pages/NewPassword';
 import SearchedBooks from './pages/SearchedBooks';
 import AdvancedSearchedBooks from './pages/AdvancedSearchedBooks';
 import BookDetailsPage from './pages/BookDetailsPage';
+import Rezervacije from './pages/Rezervacije';
+import Polica from './pages/Polica';
 
 function App() {
   const books = [
@@ -48,6 +50,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/new-password" element={<NewPassword/>}/>
         <Route path="/book-details/:bookId" element={<BookDetailsPage />} /> 
+        <Route path="/rezervacije" element={<Rezervacije/>}/>
+        <Route path="/polica" element={<Polica/>}/>
         <Route path="/advanced-searched-books/:author?/:title?/:publisher?/:year?" element={<AdvancedSearchedBooks />} />
 
       </Routes>
