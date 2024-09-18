@@ -66,6 +66,10 @@ exports.addBookToShelf = async(req,res) => {
         const user = await User.findById(req.user._id);
         const book = await Book.findById(req.body.bookId);
         if(!book) return res.status(400).send('Knjiga nije pronadjena');
+
+        if (user.polica.includes(book._id)) {
+            return res.status(400).send('Knjiga je vec na Vasoj polici.');
+        }
        
         user.polica.push(book._id);
         await user.save();
@@ -120,3 +124,25 @@ exports.removeBookFromReservations = async(req,res) => {
         res.status(500).send('Greska na serveru');
     }
 }
+
+exports.getUserShelf = async(req,res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('polica');
+        if(!user) return res.status(404).send('Korisnik nije pronadjen');
+
+        res.send(user.polica);
+    } catch (error) {
+        res.status(500).send('Greska na serveru prilikom dohvatanja knjiga sa police')
+    }
+};
+
+exports.getUserReservations = async(req,res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('rezervacije');
+        if(!user) return res.status(404).send('Korisnik nije pronadjen');
+
+        res.send(user.rezervacije);
+    } catch (error) {
+        res.status(500).send('Greska na serveru prilikom dohvatanja knjiga sa police')
+    }
+};
