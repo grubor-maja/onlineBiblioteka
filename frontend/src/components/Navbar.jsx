@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import axios from 'axios';
+import { ImLibrary } from "react-icons/im";
+
 
 function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
     const [userName, setUserName] = useState('');
@@ -38,6 +40,8 @@ function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
                 <Link to="/" className="navbar-logo">
                     Biblioteka
                 </Link>
+                <ImLibrary className='library-icon' />
+
             </div>
             <div className="navbar-center">
                 {setSearchQuery && handleSearch && (
@@ -51,22 +55,28 @@ function Navbar({ searchQuery, setSearchQuery, handleSearch }) {
             <div className="navbar-right">
                 {userName ? (
                     <div className="navbar-user">
-                    <span onClick={toggleDropdown} className="navbar-username">
-                        {userName} ▼
-                    </span>
-                    {isDropdownOpen && (
-                        <div className="navbar-dropdown">
-                            <Link to="/polica" onClick={() => setIsDropdownOpen(false)}>Moja polica</Link>
-                            <Link to="/rezervacije" onClick={() => setIsDropdownOpen(false)}>Moje rezervacije</Link>
-                        </div>
-                        
-                    )}
-                    <button onClick={handleLogout}>Odjava</button>
-                </div>
+                        <button 
+                            onClick={toggleDropdown} 
+                            className="btn btn-secondary dropdown-toggle"
+                        >
+                            {userName}
+                        </button>
+                        {isDropdownOpen && (
+                            <div className="dropdown-menu show">
+                                <Link to="/polica" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>
+                                    Moja polica
+                                </Link>
+                                <Link to="/rezervacije" className="dropdown-item" onClick={() => setIsDropdownOpen(false)}>
+                                    Moje rezervacije
+                                </Link>
+                                <button className="dropdown-item" onClick={handleLogout}>Odjava</button>
+                            </div>
+                        )}
+                    </div>
                 ) : (
-                    <Link to="/login" className="navbar-login">Prijava</Link>
+                    <Link to="/login" className="btn btn-outline-success navbar-login">Prijava</Link>
                 )}
-                <Link to="/advanced-search" className="navbar-advanced-search">Napredna pretraga</Link>
+                <Link to="/advanced-search" className="btn btn-outline-success navbar-advanced-search">Napredna pretraga</Link>
             </div>
         </nav>
     );

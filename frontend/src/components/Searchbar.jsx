@@ -12,7 +12,7 @@ function Searchbar({ searchQuery, setSearchQuery, handleSearch }) {
             />
             <button 
                 type="button" 
-                className='btn btn-outline-success' 
+                className='btn btn-outline-success btn-navbar' 
                 onClick={handleSearch}
             >
                 Search

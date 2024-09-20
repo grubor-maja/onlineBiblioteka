@@ -47,43 +47,101 @@
 }
 .navbar-left {
   flex: 1;
+  display: flex;
+  flex-direction: center;
 }
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
   color: black;
+  font-family: 'Playfair Display', serif;
+  margin-right: 10px;
+  margin-left: 50px;
+  transition: 0.5s ease-in-out;
+}
+.navbar-logo:hover {
+  color: #424243;
+}
+.library-icon {
+  font-size: 30px;
+  margin-left: 10px;
 }
 .navbar-center {
   flex: 2;
   display: flex;
   justify-content: center;
 }
+.btn-navbar {
+  width: 25%;
+}
 .navbar-right {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  margin-right: 40px;
+  margin-left: 50px;
   gap: 20px;
 }
 
-.navbar-advanced-search,
-.navbar-login {
-    text-decoration: none;
-    color: black;
-    font-size: 1rem;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    transition: background-color 0.3s;
+/* Dropdown menu */
+
+/* Dropdown meni */
+.navbar-user {
+  position: relative;
 }
 
-.navbar-advanced-search:hover,
-.navbar-login:hover {
-    background-color: #e0e0e0;
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  background-color: white;
+  border: 1px solid rgba(0,0,0,.15);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  z-index: 1000;
+  width: 200px;
+  padding: 0;
+  margin: 0;
 }
+
+.dropdown-item {
+  padding: 10px 20px;
+  display: block;
+  width: 100%;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+/* Dropdown toggle button styling */
+.btn.dropdown-toggle {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+/* Show the dropdown */
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Buttons styling */
+.btn {
+  margin-left: 10px;
+}
+
 
 .search-input {
   width: 60rem;
+}
+.search-bar {
+  width: 70%;
 }
 
 /* BookCard */
