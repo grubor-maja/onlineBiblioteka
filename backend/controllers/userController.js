@@ -24,9 +24,17 @@ exports.loginUser = async(req,res) => {
     let user = await User.findOne({email});
     if(!user) return res.status(400).send('Korisnik ne postoji sa datim email-om');
 
-    const validPassowrd = await bcrypt.compare(lozinka,user.lozinka);
-    if(!validPassowrd) return res.status(400).send('Pogresna lozinka');
-
+    console.log(user);
+    console.log(user.lozinka);
+    const validPassword = await bcrypt.compare(lozinka, user.lozinka);
+    if (!validPassword) {
+        return res.status(400).json({
+            message: 'Pogresna lozinka',
+            providedPassword: lozinka,
+            storedPasswordHash: user.lozinka,
+            bcryptComparisonResult: validPassword
+        });
+    }
     const token = user.generateAuthToken();
     res.send(token);
 }

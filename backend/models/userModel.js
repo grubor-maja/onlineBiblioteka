@@ -56,11 +56,14 @@ function arrayLimit(val) {
 }
 
 // Hashovanje lozinke
-userSchema.pre('save',async function(next) {
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('lozinka')) {
+        return next(); 
+    }
     const salt = await bcrypt.genSalt(10);
-    this.lozinka = await bcrypt.hash(this.lozinka,salt);
+    this.lozinka = await bcrypt.hash(this.lozinka, salt);
     next();
-})
+});
 
 // Kreiranje tokena 
 userSchema.methods.generateAuthToken = function() {
