@@ -4,6 +4,7 @@ import { GiBookshelf } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
 import { FaInfo } from "react-icons/fa6";
 import axios from 'axios';
+import { useEffect } from 'react';
 
 function BookCard({ id, title, author, coverImage }) {
     const navigate = useNavigate();
@@ -18,7 +19,11 @@ function BookCard({ id, title, author, coverImage }) {
     const handleShelfClick = () => {
         setMessage(''); 
         setShowModal(true);
+        console.log('True');
     };
+    useEffect(() => {
+        console.log('showModal state has changed to:', showModal); 
+    }, [showModal]);
 
     const handleConfirmAdd = async () => {
         const token = localStorage.getItem('authToken');
@@ -60,34 +65,12 @@ function BookCard({ id, title, author, coverImage }) {
                     <p>{author}</p>
                 </div>
                 <div className="book-actions">
-                    <button className="btn-shelf" onClick={handleShelfClick}>
-                        <GiBookshelf />
-                    </button>
                     <button className="btn-info" onClick={handleInfoClick}>
                         <FaInfo />
                     </button>
                 </div>
             </div>
 
-            {/* Popup za dodavanje knjige na policu */}
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        {message ? (
-                            <div>
-                                <p>{message}</p>
-                                <button onClick={closeModal}>Zatvori</button>
-                            </div>
-                        ) : (
-                            <div>
-                                <p>Da li zelite da dodate ovu knjigu na svoju policu?</p>
-                                <button onClick={handleConfirmAdd} disabled={isAdding}>Da</button>
-                                <button onClick={closeModal}>Ne</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
         </>
     );
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { useState,useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import BooksSection from '../components/BooksSection';
+import BookSectionGrid from '../components/BookSection_grid';
 import axios from 'axios';
 
 function Polica() {
@@ -31,7 +31,7 @@ function Polica() {
     <div className="container">
         <h2>Moja polica</h2>
         {books.length > 0 ? (
-            <BooksSection title="Moje knjige" books={books}/>
+            <BookSectionGrid title="" books={books}/>
         ) : (<p>Nemate knjige na svojoj polici.</p>)
     }
     </div>

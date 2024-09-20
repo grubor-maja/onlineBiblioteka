@@ -73,22 +73,25 @@ function BookDetailsPage() {
                         <img src={book.fotografija} alt={book.naslov} className="img-fluid" />
                     </div>
                     <div className="col-md-8">
-                        <h1>{book.naslov}</h1>
+                        <h1 className='book-heading'>{book.naslov}</h1>
                         <p><strong>Autor:</strong> {book.autor.join(', ')}</p>
                         <p><strong>Izdavač:</strong> {book.izdavac}, {book.godinaIzdanja}</p>
-                        <p>{book.opis || 'Genericki opis knjige koji će biti zamenjen stvarnim podacima kasnije.'}</p>
-                        
-                        <div className="book-availability mt-4">
-                            <h4>Dostupnost primerka:</h4>
-                            <p>Ukupno: {book.signatura.length}</p>
-                            <p>Slobodno: {book.signatura.filter(sig => sig.status === 'slobodan').length}</p>
-                            <p>Rezervisano: {book.signatura.filter(sig => sig.status === 'zauzet').length}</p>
+                        <p className='book-details'>{book.opis || 'Genericki opis knjige koji će biti zamenjen stvarnim podacima kasnije.'}</p>
+
+                        <div className="book-additional-info">
+                            <div className="book-availability mt-4">
+                                <h4 className='book-availability-heading'>Dostupnost primerka:</h4>
+                                <p>Ukupno: {book.signatura.length}</p>
+                                <p>Slobodno: {book.signatura.filter(sig => sig.status === 'slobodan').length}</p>
+                                <p>Rezervisano: {book.signatura.filter(sig => sig.status === 'zauzet').length}</p>
+                            </div>
+                            
+                            <div className='book-buttons'>
+                                <button className="btn btn-success me-2" onClick={handleAddToShelf}>Dodaj na policu</button>
+                                <button className="btn btn-danger" onClick={handleRemoveFromShelf}>Obriši sa police</button>
+                            </div>
                         </div>
-                        
-                        <div >
-                            <button className="btn btn-success me-2" onClick={handleAddToShelf}>Dodaj na policu</button>
-                            <button className="btn btn-danger" onClick={handleRemoveFromShelf}>Obriši sa police</button>
-                        </div>
+
 
                         {/* Prikaz poruke */}
                         {message && <div className="alert alert-info mt-3">{message}</div>}
@@ -96,11 +99,11 @@ function BookDetailsPage() {
                 </div>
 
                 <div className="book-signature-table mt-4">
-                    <h4>Signatura:</h4>
-                    <table className="table">
-                        <thead>
+                    <h4 className='book-table'>Signatura:</h4>
+                    <table className="table table-hover">
+                        <thead className='thead-dark'>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col"></th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Inventarski broj</th>
                             </tr>

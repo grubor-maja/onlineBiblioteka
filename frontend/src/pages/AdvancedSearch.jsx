@@ -73,7 +73,7 @@ function AdvancedSearch() {
                     />
                 </div>
 
-                <button type="submit" className='btn btn-primary form-btn'>Pretrazi</button>
+                <button type="submit" className='btn btn-outline-success form-btn'>Pretrazi</button>
             </form>
         </>
     );
